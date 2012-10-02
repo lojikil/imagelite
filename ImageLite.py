@@ -51,7 +51,6 @@ class ImageLite(object):
         elif data[0:1] == b'\xFF'.lower() and (data[6:10] == self._jpeg_header \
                         or data[6:10] == self._exif_header):
             self.image_type = "image/jpeg"
-            print(data[6:10])
             """
                 The code below is from
                 http://bfg-pages.googlecode.com/svn/trunk/pages/getimageinfo.py
