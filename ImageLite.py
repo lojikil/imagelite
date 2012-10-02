@@ -1,5 +1,9 @@
 import struct
-import StringIO
+
+try:
+    from io import StringIO
+except ImportError:
+    import StringIO
 
 """
     Dead simple image testing library; returns the mime type and x,y
@@ -53,7 +57,7 @@ class ImageLite(object):
                 Originally I had something else, but this worked *much* better,
                 and is New BSD licensed, so I borrowed that.
             """
-            jpeg = StringIO.StringIO(data)
+            jpeg = StringIO(data)
             jpeg.read(2)
             b = jpeg.read(1)
             try:
