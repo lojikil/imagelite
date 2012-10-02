@@ -42,7 +42,7 @@ class ImageLite(object):
             self.width, self.height = struct.unpack("<HH", data[6:10])
         elif data[:8] == self._png_header:
             self.image_type = "image/png"
-            offset = data.find("IHDR") + 4
+            offset = data.find(b"IHDR") + 4
             self.width, self.height = struct.unpack(">LL",
                             data[offset: offset + 8])
         elif data[:2] == b"BM":
