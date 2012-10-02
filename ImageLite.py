@@ -45,7 +45,7 @@ class ImageLite(object):
             offset = data.find("IHDR") + 4
             self.width, self.height = struct.unpack(">LL",
                             data[offset: offset + 8])
-        elif data[:2] == "BM":
+        elif data[:2] == b"BM":
             self.image_type = "image/x-ms-bitmap"
             self.width, self.height = struct.unpack("<ii", data[0x12:0x1a])
         elif data[0] == '\xFF' and (data[6:10].lower() == self._jpeg_header \
