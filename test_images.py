@@ -5,7 +5,8 @@ from ImageLite import ImageLite
 
 class Jpeg(unittest.TestCase):
     def setUp(self):
-        with open("./image_mini.jpg", "rb") as f:
+        # http://upload.wikimedia.org/wikipedia/commons/9/99/Jak052004.jpg
+        with open("fixtures/Jak052004.jpg", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -16,17 +17,18 @@ class Jpeg(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(200, img.width)
+        self.assertEqual(563, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(150, img.height)
+        self.assertEqual(539, img.height)
 
 
 class JpegWithExif(unittest.TestCase):
+    # http://commons.wikimedia.org/wiki/File:Hietaniemen_hautausmaa_ilmasta.jpg
     def setUp(self):
-        with open("./s_exif.jpg", "rb") as f:
+        with open("fixtures/Hietaniemen_hautausmaa_ilmasta.jpg", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -37,17 +39,18 @@ class JpegWithExif(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(500, img.width)
+        self.assertEqual(800, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(278, img.height)
+        self.assertEqual(329, img.height)
 
 
 class Png(unittest.TestCase):
+    # http://commons.wikimedia.org/wiki/File:8x8-Y-Board.png
     def setUp(self):
-        with open("./tux.png", "rb") as f:
+        with open("fixtures/8x8-Y-Board.png", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -58,17 +61,18 @@ class Png(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(400, img.width)
+        self.assertEqual(300, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(479, img.height)
+        self.assertEqual(270, img.height)
 
 
 class Gif89a(unittest.TestCase):
+    # http://commons.wikimedia.org/wiki/File:Check64x48bwrg16pal_25fps_noaudio.avi.026v10_ogv.gif
     def setUp(self):
-        with open("./bitmap-lady.gif", "rb") as f:
+        with open("fixtures/Check64x48bwrg16pal_25fps_noaudio.avi.026v10_ogv.gif", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -79,17 +83,18 @@ class Gif89a(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(418, img.width)
+        self.assertEqual(64, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(260, img.height)
+        self.assertEqual(48, img.height)
 
 
 class Gif87a(unittest.TestCase):
+    # http://commons.wikimedia.org/wiki/File:Earth.gif
     def setUp(self):
-        with open("./tycho2.gif", "rb") as f:
+        with open("fixtures/Earth.gif", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -100,17 +105,18 @@ class Gif87a(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(263, img.width)
+        self.assertEqual(192, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(353, img.height)
+        self.assertEqual(190, img.height)
 
 
 class Bitmap(unittest.TestCase):
+    # I made this bitmap with GNU Paint.
     def setUp(self):
-        with open("./duck.bmp", "rb") as f:
+        with open("fixtures/jerry.bmp", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -121,12 +127,12 @@ class Bitmap(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(500, img.width)
+        self.assertEqual(640, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(546, img.height)
+        self.assertEqual(480, img.height)
 
 
 if __name__ == "__main__":
