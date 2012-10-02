@@ -48,6 +48,8 @@ class ImageLite(object):
         elif data[:2] == b"BM":
             self.image_type = "image/x-ms-bitmap"
             self.width, self.height = struct.unpack("<ii", data[0x12:0x1a])
+
+        # TODO:  Not sure if EXIF JPEG's actually identify data[6:10] == 'exif'. EXIF JPEG's will still detected because data[6:10] == 'JFIF', in the first case.
         elif data[0:1] == b'\xFF'.lower() and (data[6:10] == self._jpeg_header \
                         or data[6:10] == self._exif_header):
             self.image_type = "image/jpeg"
