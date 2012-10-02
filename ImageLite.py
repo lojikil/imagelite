@@ -28,7 +28,7 @@ class ImageLite(object):
         self._gif_header0 = b'GIF87a'
         self._gif_header1 = b'GIF89a'
         self._png_header = b'\x89PNG\r\n\x1a\n'
-        self._jpeg_header = 'jfif'
+        self._jpeg_header = b'jfif'
         self._exif_header = 'exif'
         self.width = 0
         self.height = 0
@@ -37,6 +37,7 @@ class ImageLite(object):
             self.load(data)
 
     def load(self, data):
+        print(data[6:10])
         if data[:6] == self._gif_header0 or data[:6] == self._gif_header1:
             self.image_type = "image/gif"
             self.width, self.height = struct.unpack("<HH", data[6:10])
@@ -48,7 +49,7 @@ class ImageLite(object):
         elif data[:2] == b"BM":
             self.image_type = "image/x-ms-bitmap"
             self.width, self.height = struct.unpack("<ii", data[0x12:0x1a])
-        elif data[0] == '\xFF' and (data[6:10].lower() == self._jpeg_header \
+        elif data[0:1] == b'\xFF'.lower() and (data[6:10].lower() == self._jpeg_header \
                         or data[6:10].lower() == self._exif_header):
             self.image_type = "image/jpeg"
             """
