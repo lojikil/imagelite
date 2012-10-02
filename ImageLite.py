@@ -25,8 +25,8 @@ except ImportError:
 
 class ImageLite(object):
     def __init__(self, data=None):
-        self._gif_header0 = 'GIF87a'
-        self._gif_header1 = 'GIF89a'
+        self._gif_header0 = b'GIF87a'
+        self._gif_header1 = b'GIF89a'
         self._png_header = '\x89PNG\r\n\x1a\n'
         self._jpeg_header = 'jfif'
         self._exif_header = 'exif'
