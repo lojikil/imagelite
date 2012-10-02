@@ -1,5 +1,9 @@
 import struct
-import StringIO
+
+try:
+    from io import BytesIO as ImageIO
+except ImportError:
+    from StringIO import StringIO as ImageIO
 
 """
     Dead simple image testing library; returns the mime type and x,y
@@ -21,10 +25,10 @@ import StringIO
 
 class ImageLite(object):
     def __init__(self, data=None):
-        self._gif_header0 = 'GIF87a'
-        self._gif_header1 = 'GIF89a'
-        self._png_header = '\x89PNG\r\n\x1a\n'
-        self._jpeg_header = 'jfif'
+        self._gif_header0 = b'GIF87a'
+        self._gif_header1 = b'GIF89a'
+        self._png_header = b'\x89PNG\r\n\x1a\n'
+        self._jpeg_header = b'JFIF'
         self._exif_header = 'exif'
         self.width = 0
         self.height = 0
@@ -38,14 +42,16 @@ class ImageLite(object):
             self.width, self.height = struct.unpack("<HH", data[6:10])
         elif data[:8] == self._png_header:
             self.image_type = "image/png"
-            offset = data.find("IHDR") + 4
+            offset = data.find(b"IHDR") + 4
             self.width, self.height = struct.unpack(">LL",
                             data[offset: offset + 8])
-        elif data[:2] == "BM":
+        elif data[:2] == b"BM":
             self.image_type = "image/x-ms-bitmap"
             self.width, self.height = struct.unpack("<ii", data[0x12:0x1a])
-        elif data[0] == '\xFF' and (data[6:10].lower() == self._jpeg_header \
-                        or data[6:10].lower() == self._exif_header):
+
+        # TODO:  Not sure if EXIF JPEG's actually identify data[6:10] == 'exif'. EXIF JPEG's will still detected because data[6:10] == 'JFIF', in the first case.
+        elif data[0:1] == b'\xFF'.lower() and (data[6:10] == self._jpeg_header \
+                        or data[6:10] == self._exif_header):
             self.image_type = "image/jpeg"
             """
                 The code below is from
@@ -53,7 +59,7 @@ class ImageLite(object):
                 Originally I had something else, but this worked *much* better,
                 and is New BSD licensed, so I borrowed that.
             """
-            jpeg = StringIO.StringIO(data)
+            jpeg = ImageIO(data)
             jpeg.read(2)
             b = jpeg.read(1)
             try:

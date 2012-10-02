@@ -1,7 +1,9 @@
 ### ImageLite ###
 
  A dead simple library for detecting mime type & dimensions of an image, with 0 dependencies outside of
- Python, struct and StringIO. 
+ Python, struct and StringIO.
+
+ImageLite supports and has been tested against Python3, Python2.7, and Python2.6.
 
 ### Example Usage ###
 
