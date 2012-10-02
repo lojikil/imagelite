@@ -1,9 +1,9 @@
 import struct
 
 try:
-    from io import StringIO
+    from io import BytesIO as ImageIO
 except ImportError:
-    import StringIO
+    from StringIO import StringIO as ImageIO
 
 """
     Dead simple image testing library; returns the mime type and x,y
@@ -37,7 +37,6 @@ class ImageLite(object):
             self.load(data)
 
     def load(self, data):
-        print(data[6:10])
         if data[:6] == self._gif_header0 or data[:6] == self._gif_header1:
             self.image_type = "image/gif"
             self.width, self.height = struct.unpack("<HH", data[6:10])
@@ -58,7 +57,7 @@ class ImageLite(object):
                 Originally I had something else, but this worked *much* better,
                 and is New BSD licensed, so I borrowed that.
             """
-            jpeg = StringIO(data)
+            jpeg = ImageIO(data)
             jpeg.read(2)
             b = jpeg.read(1)
             try:
