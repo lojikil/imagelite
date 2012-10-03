@@ -29,7 +29,7 @@ class ImageLite(object):
         self._gif_header1 = b'GIF89a'
         self._png_header = b'\x89PNG\r\n\x1a\n'
         self._jpeg_header = b'JFIF'
-        self._exif_header = 'exif'
+        self._exif_header = b'Exif'
         self.width = 0
         self.height = 0
         self.image_type = ""
