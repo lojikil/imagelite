@@ -26,9 +26,9 @@ class Jpeg(unittest.TestCase):
 
 
 class JpegWithExif(unittest.TestCase):
-    # http://commons.wikimedia.org/wiki/File:Hietaniemen_hautausmaa_ilmasta.jpg
+    # I took this picture -- nobody owns it.
     def setUp(self):
-        with open("fixtures/Hietaniemen_hautausmaa_ilmasta.jpg", "rb") as f:
+        with open("fixtures/20121002_170658.jpg", "rb") as f:
             self.d = f.read()
 
     def test_can_identify(self):
@@ -39,12 +39,12 @@ class JpegWithExif(unittest.TestCase):
     def test_finds_width(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(800, img.width)
+        self.assertEqual(3264, img.width)
 
     def test_finds_height(self):
         img = ImageLite()
         img.load(self.d)
-        self.assertEqual(329, img.height)
+        self.assertEqual(2448, img.height)
 
 
 class Png(unittest.TestCase):
