@@ -33,7 +33,7 @@ class ImageLite(object):
         self.width = 0
         self.height = 0
         self.image_type = ""
-        if data != None:
+        if data is not None:
             self.load(data)
 
     def load(self, data):
@@ -44,14 +44,17 @@ class ImageLite(object):
             self.image_type = "image/png"
             offset = data.find(b"IHDR") + 4
             self.width, self.height = struct.unpack(">LL",
-                            data[offset: offset + 8])
+                                                    data[offset: offset + 8])
         elif data[:2] == b"BM":
             self.image_type = "image/x-ms-bitmap"
             self.width, self.height = struct.unpack("<ii", data[0x12:0x1a])
 
-        # TODO:  Not sure if EXIF JPEG's actually identify data[6:10] == 'exif'. EXIF JPEG's will still detected because data[6:10] == 'JFIF', in the first case.
-        elif data[0:1] == b'\xFF'.lower() and (data[6:10] == self._jpeg_header \
-                        or data[6:10] == self._exif_header):
+        # TODO: Not sure if EXIF JPEG's actually identify data[6:10] == 'exif'.
+        # EXIF JPEG's will still detected because data[6:10] == 'JFIF',
+        # in the first case.
+        elif data[0:1] == b'\xFF'.lower() and \
+            (data[6:10] == self._jpeg_header or
+             data[6:10] == self._exif_header):
             self.image_type = "image/jpeg"
             """
                 The code below is from
@@ -74,7 +77,7 @@ class ImageLite(object):
                         break
                     else:
                         jpeg.read(int(struct.unpack(">H",
-                                                        jpeg.read(2))[0]) - 2)
+                                                    jpeg.read(2))[0]) - 2)
                     b = jpeg.read(1)
                 self.width = int(w)
                 self.height = int(h)
@@ -86,5 +89,6 @@ class ImageLite(object):
     def __str__(self):
         if self.image_type != "":
             return "{0} width: {1}, height: {2}".format(self.image_type,
-                            self.width, self.height)
+                                                        self.width,
+                                                        self.height)
         return "ImageLite"
